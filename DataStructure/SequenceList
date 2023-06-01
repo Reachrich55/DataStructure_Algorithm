@@ -30,7 +30,7 @@ void printf(SeqList& list)
 
 //取值
 int GetElem(SeqList& list, int i) {
-    if (i < 1 || i >= list.length) { // 检查下标是否越界
+    if (i < 1 || i > list.length) { // 检查下标是否越界
         cout<<"下标越界"<<endl;
         return -1;
     }
