@@ -28,6 +28,15 @@ void printf(SeqList& list)
     cout << endl;
 }
 
+//取值
+int GetElem(SeqList& list, int i) {
+    if (i < 1 || i >= list.length) { // 检查下标是否越界
+        cout<<"下标越界"<<endl;
+        return -1;
+    }
+    return list.data[i-1]; // 返回指定位置的元素
+}
+
 //查找
 int LocateElem(SeqList& list, int e)
 {
@@ -69,14 +78,6 @@ bool ListDelete(SeqList& list, int i)
     }
     list.length--;
     return true;
-}
-
-//取值
-int GetElem(SeqList& list, int i) {
-    if (i < 1 || i >= list.length) { // 检查下标是否越界
-        cout<<"下标越界"<<endl;
-    }
-    return list.data[i-1]; // 返回指定位置的元素
 }
 
 //销毁
