@@ -57,12 +57,7 @@ void DeQueue(Queue& Q)
     }
     int i = Q.front;
     cout << Q.base[i] << "已出队" << endl;
-    for ( i = Q.front; i < Q.rear - 1; i++)
-    {
-        Q.base[i] = Q.base[i + 1];
-    }
-
-    Q.rear--;
+    Q.front++;
 }
 
 //取队头元素
