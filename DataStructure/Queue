@@ -31,6 +31,12 @@ bool IsFull(Queue Q)
     return Q.rear == Q.capacity;
 }
 
+//求队列长度
+int QueueLength(Queue Q)
+{
+    return Q.rear - Q.front;
+}
+
 //入队操作
 void EnQueue(Queue& Q, int element)
 {
