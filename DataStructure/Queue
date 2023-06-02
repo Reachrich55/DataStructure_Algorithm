@@ -65,6 +65,15 @@ void DeQueue(Queue& Q)
     Q.rear--;
 }
 
+//取队头元素
+int GetHead(Queue Q) 
+{
+    if (!IsEmpty(Q))
+    {
+        return Q.base[Q.front];
+    }
+}
+
 //打印队列元素
 void PrintQueue(Queue Q)
 {
