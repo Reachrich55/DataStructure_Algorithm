@@ -1,0 +1,67 @@
+const int MVNum = 10;      // 最大顶点数
+const int MaxWeight = 63;    //表示极大值 
+
+// 定义路径的结构体，用于实现寻找最短路径
+struct Path{
+    int length;
+    int prevex;
+};
+
+// 申明Path类型dist数组用于记录最短路径变化
+Path dist[MVNum];
+
+// 初始化dist数组
+void initdist(AMGraph& G, Path dist[]) {
+    //设置dist[0]
+    dist[0].length = 0;
+    dist[0].prevex = 0;
+    //设置邻接矩阵[0][0]标记
+    G.matrix[0][0] = 1;
+    //用邻接矩阵第0行初始化dist[1]~[MVNum-1]
+    for (int i = 1; i < MVNum; i++) {
+        dist[i].length = G.matrix[0][i];
+        //若v0与vi之间有边
+        if (dist[i].length != MaxWeight)
+            dist[i].prevex = 0;
+        //否则, vi暂无前驱
+        else
+            dist[i].prevex = -1;
+    }
+}
+
+void dijkstra(AMGraph& G, Path dist[]) {
+    int i,j,min,minw;       //minw: 记录最小长度
+    initdist(G, dist);
+    //循环N-1次, 求N-1条最短路径
+    for ( i = 1; i < G.vexNum; i++) {
+        minw = MaxWeight;
+        min = 0;
+        //找最小值
+        for ( j = 1; j < G.vexNum; j++) {
+            //若到vj的路径未定，且较小
+            if ((G.matrix[j][j] == 0) && (dist[j].length < minw)) {
+                minw = dist[j].length;
+                min = j;
+            }
+        }
+        //若v0与V-U不连通，则结束
+        if (minw == MaxWeight)
+            break;
+        //找到“未定路径中的最小值dist[min]”之后
+        G.matrix[min][min] = 1;        //将顶点加入U集合，修改标记
+        //更新“未确定”的路径长度
+        for (j = 1; j < G.vexNum; j++) {
+            if (G.matrix[j][j] == 0 && dist[j].length > dist[min].length + G.matrix[min][j]) {
+                //则更换路长、前驱
+                dist[j].length = dist[min].length + G.matrix[min][j];
+                dist[j].prevex = min;
+            }
+        }
+        //打印dist数组
+        for (int k = 0; k < G.vexNum; k++)
+        {
+            cout << dist[k].length << ' ' << dist[k].prevex << ' ';
+        }
+        cout << endl;
+    }
+}
