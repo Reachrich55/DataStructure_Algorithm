@@ -1,0 +1,42 @@
+// DFS需要设置结点访问状态数组visited[]
+int visited[MVNum];
+
+// 搜索之前所有结点均为被访问
+// 初始化visited数组
+void initvisited(AMGraph G) {
+    for (int i = 0; i < G.vexNum; i++) {
+        visited[i] = 0;
+    }
+}
+
+//DFS法1：根据结点名称进行递归搜索
+void DFS(AMGraph G, char v) {
+    
+    int index_v = searchVertex(&G, v);
+    visited[index_v] = 1;    // 标记当前顶点已被访问
+    cout << G.vexs[index_v] << " ";    // 输出当前顶点
+
+    int tmp_index = firstAdjVex(G, index_v);    //记录顶点V的第一个邻接点在顶点表中的下标
+    
+    //邻接点存在
+    while (tmp_index != -1) {
+        //邻接点未被访问过
+        if (!visited[tmp_index]) {
+            DFS(G, G.vexs[tmp_index]);
+        }
+        tmp_index = nextAdjVex(G, index_v, tmp_index);
+    }
+    cout << endl;
+}
+
+//DFS法2：根据结点在顶点表中的下标进行递归搜索
+void DFS(AMGraph G, int index_v) {
+    visited[index_v] = 1;    // 标记当前顶点已被访问
+    cout << G.vexs[index_v] << " ";    // 输出当前顶点
+    //依次检查邻接矩阵第index_v行寻找邻接点
+    for (int i = 0; i < G.vexNum; i++) {
+        if (G.matrix[index_v][i] > 0 && G.matrix[index_v][i] < MaxWeight && !visited[i]) {
+            DFS(G, i);
+        }
+    }
+}
