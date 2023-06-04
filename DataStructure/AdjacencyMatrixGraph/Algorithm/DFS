@@ -1,7 +1,8 @@
 // DFS需要设置结点访问状态数组visited[]
+// 设置为全局数组可避免在DFS()再次申明变量
 int visited[MVNum];
 
-// 搜索之前所有结点均为被访问
+// 搜索之前所有结点均未被访问
 // 初始化visited数组
 void initvisited(AMGraph G) {
     for (int i = 0; i < G.vexNum; i++) {
