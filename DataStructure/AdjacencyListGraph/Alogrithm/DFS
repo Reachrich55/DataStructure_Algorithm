@@ -1,0 +1,27 @@
+// DFS需要设置结点访问状态数组visited[]
+// 设置为全局数组可避免在DFS()再次申明变量
+int visited[MVNum];
+
+// 搜索之前所有结点均未被访问
+// 初始化visited数组
+void initvisited(AMGraph G) {
+    for (int i = 0; i < G.vexNum; i++) {
+        visited[i] = 0;
+    }
+}
+
+//DFS:根据结点在顶点表中的下标进行递归搜索
+void DFS(ALGraph G, int index_v) {
+    visited[index_v] = 1;
+    cout << G.vexs[index_v].vex << " ";
+    //p指向v的边链表的第一个边结点
+    ArcNode* p = G.vexs[index_v].head;
+    while (p != NULL) {
+        //v邻接点的下标
+        int tmp_index = p->adjvex;
+        if (!visited[tmp_index]) {
+            DFS(G, tmp_index);
+        }
+        p = p->next;
+    }
+}
