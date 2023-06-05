@@ -18,7 +18,10 @@
 链式存储结构、先序创建二叉树、先序遍历、中序遍历、后序遍历  
 ### 第六章 图
 **邻接矩阵图 AdjacencyMatrixGraph**  
-存储结构、创建图、DFS、BFS、Dijkstra  
+存储结构、创建图、DFS、BFS、Dijkstra、Prim  
 **邻接表图 AdjacencyListGraph**  
-存储结构、创建图、DFS
+存储结构、创建图、DFS、拓扑排序  
+### 第七章 查找
+**二叉排序树 BinarySortTree**  
+存储结构、查找、创建、插入、删除
 
