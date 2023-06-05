@@ -1,0 +1,84 @@
+//计算节点入度
+void getIndegree(ALGraph* G, int indegree[]) {
+    for (int i = 0; i < G->vexNum; i++) {
+        ArcNode* p = G->vexs[i].head;
+        while (p) {
+            indegree[p->adjvex]++;
+            p = p->next;
+        }
+    }
+}
+
+//使用栈的拓扑排序
+void TopologicalSort(ALGraph* G) {
+    int indegree[MVNum] = { 0 };
+    getIndegree(G, indegree);
+
+    SeqStack s;
+    InitStack(s,G->vexNum);
+    for (int i = 0; i < G->vexNum; i++) {
+        if (indegree[i] == 0) Push(s,i);
+    }
+    int count = 0;      //对输出顶点计数
+    while (!IsEmpty(s)) {
+        int v = 0;
+        Pop(s, v);
+        
+        count++;
+        cout << G->vexs[v].vex << " ";
+
+        ArcNode* p = G->vexs[v].head;
+        while (p) {
+            int w = p->adjvex;
+            indegree[w]--;
+            if (indegree[w] == 0) Push(s,w);
+            p = p->next;
+        }
+    }
+    if (count < G->vexNum) {
+        cout << "拓扑排序失败" << endl;    //有回路
+        return;
+}
+
+//调用栈的函数
+//顺序栈的存储结构
+struct SeqStack
+{
+    int* top;
+    int* base;
+    int capacity;
+};
+
+//初始化
+void InitStack(SeqStack& S, int capacity)
+{
+    //为顺序栈动态分配一个最大容量为capacity的数组空间，使base指向这段空间的基地址，即栈底。
+    S.base = new int[capacity];
+    //栈顶指针top初始为base,表示栈空。
+    S.top = S.base;
+    S.capacity = capacity;
+}
+
+// 判断栈是否为空
+bool IsEmpty(SeqStack& S) {
+    return S.top == S.base;
+}
+
+// 判断栈是否已满
+bool IsFull(SeqStack& S) {
+    return S.top - S.base == S.capacity;
+}
+
+// 入栈
+void Push(SeqStack& S, int x) {
+    if (IsFull(S)) return;
+    *S.top = x;
+    S.top++;
+}
+
+// 出栈
+void Pop(SeqStack& S, int& x) {
+    if (IsEmpty(S)) return;
+    S.top--;
+    x = *S.top;
+}
