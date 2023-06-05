@@ -1,0 +1,51 @@
+const int MVNum = 10;      // 最大顶点数
+const int MaxWeight = 63;    //表示极大值 
+
+// 定义路径的结构体，用于实现寻找最小生成树
+struct Path{
+    int length;
+    int prevex;
+};
+
+//普利姆最小生成树
+void Prim(AMGraph G, char v) {
+    Path dist[MVNum];
+    int index_v = searchVertex(&G, v);
+
+    for (int i = 0; i < G.vexNum; i++)
+    {
+        if (i != index_v) {
+            dist[i].length = G.matrix[index_v][i];
+            dist[i].prevex = index_v;
+        }
+    }
+    
+    //以此作为标记，表明该顶点是否被访问
+    dist[index_v].length = 0;
+
+    for (int i = 0; i < G.vexNum - 1; i++) {
+        int minw = MaxWeight;
+        int index_nextv = 0;
+
+        // 在未访问的顶点中找到距离最小的顶点
+        for (int j = 0; j < G.vexNum; j++) {
+            if (dist[j].length != 0 && dist[j].length < minw) {
+                minw = dist[j].length;
+                index_nextv = j;
+            }
+        }
+
+        dist[index_nextv].length = 0;
+
+        // 输出最小生成树的边
+        cout << G.vexs[dist[index_nextv].prevex] << "-" << G.vexs[index_nextv] << " ";
+
+        // 更新其他未访问顶点的最短距离和前驱顶点
+        for (int j = 0; j < G.vexNum; j++) {
+            if (dist[j].length != 0 && G.matrix[index_nextv][j] < dist[j].length) {
+                dist[j].length = G.matrix[index_nextv][j];
+                dist[j].prevex = index_nextv;
+            }
+        }
+    }
+}
