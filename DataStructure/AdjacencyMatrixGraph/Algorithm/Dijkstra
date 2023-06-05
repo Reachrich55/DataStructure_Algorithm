@@ -30,31 +30,30 @@ void initdist(AMGraph& G, Path dist[]) {
 }
 
 void dijkstra(AMGraph& G, Path dist[]) {
-    int i,j,min,minw;       //minw: 记录最小长度
     initdist(G, dist);
     //循环N-1次, 求N-1条最短路径
-    for ( i = 1; i < G.vexNum; i++) {
-        minw = MaxWeight;
-        min = 0;
+    for ( int i = 1; i < G.vexNum; i++) {
+        int minw = MaxWeight;       //minw: 记录最小长度
+        int index_nextv = 0;
         //找最小值
-        for ( j = 1; j < G.vexNum; j++) {
+        for ( int j = 1; j < G.vexNum; j++) {
             //若到vj的路径未定，且较小
             if ((G.matrix[j][j] == 0) && (dist[j].length < minw)) {
                 minw = dist[j].length;
-                min = j;
+                index_nextv = j;
             }
         }
         //若v0与V-U不连通，则结束
         if (minw == MaxWeight)
             break;
-        //找到“未定路径中的最小值dist[min]”之后
-        G.matrix[min][min] = 1;        //将顶点加入U集合，修改标记
+        //找到“未定路径中的最小值dist[index_nextv]”之后
+        G.matrix[index_nextv][index_nextv] = 1;        //将顶点加入U集合，修改标记
         //更新“未确定”的路径长度
-        for (j = 1; j < G.vexNum; j++) {
-            if (G.matrix[j][j] == 0 && dist[j].length > dist[min].length + G.matrix[min][j]) {
+        for (int j = 1; j < G.vexNum; j++) {
+            if (G.matrix[j][j] == 0 && dist[j].length > dist[index_nextv].length + G.matrix[index_nextv][j]) {
                 //则更换路长、前驱
-                dist[j].length = dist[min].length + G.matrix[min][j];
-                dist[j].prevex = min;
+                dist[j].length = dist[index_nextv].length + G.matrix[index_nextv][j];
+                dist[j].prevex = index_nextv;
             }
         }
         //打印dist数组
@@ -64,4 +63,3 @@ void dijkstra(AMGraph& G, Path dist[]) {
         }
         cout << endl;
     }
-}
