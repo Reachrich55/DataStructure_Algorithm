@@ -1,0 +1,5 @@
+// 统计二叉树中结点的个数
+int NodeCount(BiTree T) {
+    if (!T) return 0;
+    else return NodeCount(T->lchild) + NodeCount(T->rchild) + 1;
+}
