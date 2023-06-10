@@ -1,0 +1,34 @@
+//计算二叉树的最大宽度的算法可以采用层次遍历的思想，具体步骤如下：
+//定义一个队列，并将二叉树的根节点加入队列。
+//记录当前队列中节点的个数，即当前层的节点数。
+//从队列中依次取出当前层的节点，记录节点在该层的位置，并将其左右子节点加入队列。
+//更新下一层节点的个数，即将队列中元素个数赋值给该变量。
+//在每一层结束后，计算该层节点的最大宽度，即最右节点的位置减去最左节点的位置加1，并记录最大宽度。
+//重复以上步骤，直到队列为空。
+int GetMaxWidth(BiTree T) {
+    if (!T) {
+        return 0;
+    }
+    int max_width = 1;
+    CircularQueue Q;
+    InitQueue(Q,5);
+    EnQueue(Q,T);
+    while (!IsEmpty(Q)) {
+        //计算此层结点数量
+        int size = GetQueueLength(Q);
+        //更新最大宽度
+        max_width = max(max_width, size);
+        for (int i = 0; i < size; i++) {
+            BiTree node = Q.base[Q.front]; 
+            DeQueue(Q);//将上一层结点出队
+            //上一层结点存在子节点则入队
+            if (node->lchild) {
+                EnQueue(Q, node->lchild);
+            }
+            if (node->rchild) {
+                EnQueue(Q, node->rchild);
+            }
+        }
+    }
+    return max_width;
+}
