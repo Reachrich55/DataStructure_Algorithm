@@ -26,7 +26,7 @@ void Push(SeqStack& S, int e)
     //栈满
     if (S.top - S.base == S.capacity)
     {
-        return ;
+        return;
     }
     *S.top = e;
     S.top++;
@@ -39,7 +39,7 @@ void Pop(SeqStack& S, int& e)
     //栈空
     if (S.top == S.base)
     {
-        return ;
+        return;
     }
     S.top--;
     e = *S.top;
@@ -59,18 +59,19 @@ int GetTop(SeqStack S) {
 
 int main()
 {
-    SeqStack stack;
+    SeqStack S;
     int capacity = 5; // 栈的容量
 
     // 初始化栈
-    InitStack(stack, capacity);
+    InitStack(S, capacity);
 
     // 入栈测试
     cout << "Pushing elements onto the stack..." << endl;
     for (int i = 1; i <= capacity + 1; i++)
     {
-        if (Push(stack, i))
+        if (S.top - S.base != S.capacity)
         {
+            Push(S, i);
             cout << "Pushed: " << i << endl;
         }
         else
@@ -82,14 +83,15 @@ int main()
     // 出栈测试
     cout << endl << "Popping elements from the stack..." << endl;
     int poppedElement;
-    while (Pop(stack, poppedElement))
+    while (S.top != S.base)
     {
+        Pop(S, poppedElement);
         cout << "Popped: " << poppedElement << endl;
     }
 
     // 取栈顶元素测试
     cout << endl << "Getting the top element of the stack..." << endl;
-    int topElement = GetTop(stack);
+    int topElement = GetTop(S);
     if (topElement != -1)
     {
         cout << "Top element: " << topElement << endl;
@@ -100,7 +102,7 @@ int main()
     }
 
     // 释放栈空间
-    delete[] stack.base;
+    delete[] S.base;
 
     return 0;
 }
