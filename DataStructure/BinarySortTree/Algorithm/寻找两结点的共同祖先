@@ -1,0 +1,30 @@
+//二叉排序树T中，打印a, b两个结点的公共祖先。
+BSTree GetLastCommonAncestor(BSTree T, int a, int b)  {
+    if (!T) {
+        return 0;
+    }
+    // 当前节点即为a和b的公共祖先
+    if (T->data == a || T->data == b) {
+        return T;
+    }
+    // 在左子树上查找
+    if (T->data > a && T->data > b) {
+        return GetLastCommonAncestor(T->lchild, a, b);
+    }
+    // 在右子树上查找
+    if (T->data < a && T->data < b) {
+        return GetLastCommonAncestor(T->rchild, a, b);
+    }
+    // 分别在左子树和右子树上
+    BSTree lchild = GetLastCommonAncestor(T->lchild, a, b);
+    BSTree rchild = GetLastCommonAncestor(T->rchild, a, b);
+    if (lchild && rchild) {
+        return T;
+    }
+    else if (lchild) {
+        return lchild;
+    }
+    else {
+        return rchild;
+    }
+}
