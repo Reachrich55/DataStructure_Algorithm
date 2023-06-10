@@ -92,5 +92,6 @@ int main()
     DeQueue(CQ, x);
     cout << "Dequeued element: " << x << endl;
     PrintQueue(CQ);
+    delete[] CQ.base; // 释放动态分配的内存
     return 0;
 }
