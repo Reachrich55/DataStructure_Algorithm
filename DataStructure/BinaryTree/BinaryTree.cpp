@@ -39,16 +39,42 @@ void PreOrderTraverse(BiTree T)
     PreOrderTraverse(T->rchild); // 遍历右子树
 }
 
-// 中序遍历二叉树
-void InOrderTraverse(BiTree T) 
-{
-    if (T == NULL) 
-    {
+// 中序遍历二叉树(递归）
+void InOrderTraverse1(BiTree T) {
+    if (T == NULL) {
         return;
     }
-    InOrderTraverse(T->lchild); // 遍历左子树
+    InOrderTraverse1(T->lchild); // 遍历左子树
     cout << T->data; // 输出节点数据
-    InOrderTraverse(T->rchild); // 遍历右子树
+    InOrderTraverse1(T->rchild); // 遍历右子树
+}
+
+// 中序遍历二叉树(非递归)
+// 初始化栈：在开始之前，你需要创建一个空栈，并确保栈为空。
+// 遍历过程：从根节点开始，将当前节点及其左子树的所有左孩子依次入栈，直到左孩子为空。
+// 弹出节点并访问：从栈中弹出一个节点，并访问该节点的数据。
+// 处理右子树：如果该节点存在右子树，将右子树作为当前节点，并将其左子树及其左孩子入栈，重复步骤3。
+// 重复操作：重复上两个步骤，直到栈为空且当前节点为NULL。
+void InOrderTraverse2(BiTree T) {
+    SeqStack S;
+    InitStack(S, 5);
+    BiTree p = T;
+    BiTNode* q;
+    while (p || S.top != S.base)
+    {
+        if (p) 
+        {
+            Push(S, p);
+            p = p->lchild;
+        }
+        else
+        {
+            Pop(S, q);
+            cout << q->data;
+            p = q->rchild;
+        }
+    }
+    cout << endl;
 }
 
 // 后序遍历二叉树
@@ -67,6 +93,6 @@ int main() {
     BiTree T = NULL;
     //ABC##DE#G##F###
     PreCreateBiTree(T);
-    InOrderTraverse(T);
+    InOrderTraverse1(T);
     return 0;
 }
