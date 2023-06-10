@@ -33,7 +33,7 @@ bool IsFull(CircularQueue& CQ)
 }
 
 //求队列长度
-int CircularQueueLength(CircularQueue CQ) 
+int GetCircularQueueLength(CircularQueue CQ) 
 {
     return (CQ.rear - CQ.front + CQ.capacity) % CQ.capacity;
 }
