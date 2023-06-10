@@ -1,0 +1,18 @@
+//计算二叉排序树T中，关键字key的查找长度。
+int BSTSearchLength(BSTree T, int key) {
+    if (T == NULL) { // 空节点，查找失败
+        return 0;
+    }
+    else if (T->data == key) { 
+        // 找到关键字，返回查找长度1
+        return 1;
+    }
+    else if (T->data > key) { 
+        // 在左子树中查找
+        return 1 + BSTSearchLength(T->lchild, key);
+    }
+    else { 
+        // 在右子树中查找
+        return 1 + BSTSearchLength(T->rchild, key);
+    }
+}
