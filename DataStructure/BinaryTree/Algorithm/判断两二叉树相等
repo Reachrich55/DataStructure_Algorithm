@@ -1,0 +1,17 @@
+//需要对两棵树进行遍历，对每个节点进行比较。以下是一种递归实现方式：
+//如果两棵树都为空，返回 true；
+//如果两棵树其中一棵为空，返回 false；
+//如果两棵树根节点的值不相等，返回 false；
+//分别比较左右子树是否相等，如果左右子树都相等，返回 true，否则返回 false。
+bool IsEqual(BiTree t1, BiTree t2) {
+    if (t1 == nullptr && t2 == nullptr) {
+        return true;
+    }
+    if (t1 == nullptr || t2 == nullptr) {
+        return false;
+    }
+    if (t1->data != t2->data) {
+        return false;
+    }
+    return IsEqual(t1->lchild, t2->lchild) && IsEqual(t1->rchild, t2->rchild);
+}
