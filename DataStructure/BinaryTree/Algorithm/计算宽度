@@ -32,3 +32,55 @@ int GetMaxWidth(BiTree T) {
     }
     return max_width;
 }
+
+//需要使用的循环队列函数
+// 循环队列的存储结构
+struct CircularQueue {
+    BiTree* base;
+    int front, rear, capacity;
+};
+
+// 初始化
+void InitQueue(CircularQueue& Q, int capacity) {
+    Q.base = new BiTree[capacity];
+    Q.front = 0;
+    Q.rear = 0;
+    Q.capacity = capacity;
+}
+
+// 判断空列
+bool IsEmpty(CircularQueue& Q) {
+    return Q.front == Q.rear;
+}
+
+// 判断队满
+bool IsFull(CircularQueue& Q) {
+    //若尾指针在循环意义上+1后等于头指针，表明队满
+    return (Q.rear + 1) % Q.capacity == Q.front;
+}
+
+// 入队，在队尾插入一个新元素
+bool EnQueue(CircularQueue& Q, BiTree data) {
+    if (IsFull(Q)) {
+        cout << "Queue is full." << endl;
+        return false;
+    }
+    Q.base[Q.rear] = data;
+    Q.rear = (Q.rear + 1) % Q.capacity;
+    return true;
+}
+
+// 出队，删除队头元素
+bool DeQueue(CircularQueue& Q) {
+    if (IsEmpty(Q)) {
+        cout << "Queue is empty." << endl;
+        return false;
+    }
+    Q.front = (Q.front + 1) % Q.capacity;
+    return true;
+}
+
+// 循环队列长度
+int GetQueueLength(CircularQueue Q) {
+    return (Q.rear - Q.front + Q.capacity) % Q.capacity;
+}
